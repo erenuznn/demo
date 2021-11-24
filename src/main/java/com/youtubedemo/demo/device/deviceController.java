@@ -1,5 +1,7 @@
 package com.youtubedemo.demo.device;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +33,9 @@ public class deviceController {
 
     @GetMapping
     public List<device> getDevices(@RequestParam(required = false, name = "brand") String brand,
-                                       @RequestParam(required = false, name = "model") String model,
-                                       @RequestParam(required = false, name = "os") String os,
-                                       @RequestParam(required = false, name = "osVersion") String osVersion
+                                   @RequestParam(required = false, name = "model") String model,
+                                   @RequestParam(required = false, name = "os") String os,
+                                   @RequestParam(required = false, name = "osVersion") String osVersion
     ){
 
         return deviceService.getByEverything(brand,model,os,osVersion);

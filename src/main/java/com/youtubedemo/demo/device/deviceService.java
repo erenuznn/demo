@@ -16,10 +16,10 @@ public class deviceService {
         this.deviceRepository = deviceRepository;
     }
 
+        public void addNewDevice(device device) {
+            Optional<device> deviceValidation = deviceRepository
+                    .findIfExists(device.getBrand(),device.getModel(),device.getOsVersion()); // Aynı Brand,Model ve osVersion'a sahip mi diye kontrol edilir.
 
-    public void addNewDevice(device device) {
-        Optional<device> deviceValidation = deviceRepository
-                .findIfExists(device.getBrand(),device.getModel(),device.getOsVersion()); // Aynı Brand,Model ve osVersion'a sahip mi diye kontrol edilir.
 
         if (deviceValidation.isPresent()){
             throw new IllegalStateException("Aynı marka, model ve işletim sistemi sürümüne sahip bir cihaz zaten var.");
@@ -39,7 +39,7 @@ public class deviceService {
         if (valid_os == null || valid_os.length() == 0){
             throw new IllegalStateException("İşletim sistemi adı boş olamaz.");
         }
-        if (!valid_os.equals("Android") && !valid_os.equals("ios")){
+        if (!valid_os.equals("Android") && !valid_os.equals("iOS")){
             throw new IllegalStateException("İşletim sistemi sadece Android veya ios olabilir.");
         }
 
@@ -50,15 +50,16 @@ public class deviceService {
 
         deviceRepository.save(device); //Database'e kayıt yapılır.
         System.out.println(device.getId());  //Database'e kayıt yapıldıktan sonra ID değeri return edilir.
+
     }
 
     public void deleteDevice(int deviceId) {
-       boolean exists = deviceRepository.existsById(deviceId);
-       if (!exists){
-           new IllegalStateException("Bu ID numarasına sahip cihaz bulunamadı.");
-       }
+        boolean exists = deviceRepository.existsById(deviceId);
+        if (!exists){
+            new IllegalStateException("Bu ID numarasına sahip cihaz bulunamadı.");
+        }
 
-       deviceRepository.deleteById(deviceId);
+        deviceRepository.deleteById(deviceId);
     }
 
 
@@ -66,4 +67,5 @@ public class deviceService {
         return deviceRepository.findByEverything(brand,model,os,osVersion);
 
     }
+
 }

@@ -14,7 +14,7 @@ public interface deviceRepository
         extends JpaRepository<device, Serializable>{
 
     @Query("Select s FROM device s WHERE s.brand = ?1 AND s.model =?2 AND s.osVersion =?3")
-        Optional<device> findIfExists(String brand, String model, String osVersion);
+    Optional<device> findIfExists(String brand, String model, String osVersion);
 
 
     @Query("SELECT s FROM device s WHERE ((:brand is null or s.brand = :brand) " +
